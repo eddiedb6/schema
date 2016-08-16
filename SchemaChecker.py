@@ -1,4 +1,5 @@
 import os
+import sys
 import logging
 
 from SchemaConst import *
@@ -38,7 +39,9 @@ class SchemaChecker:
             if not os.path.exists(self.__defPath):
                 Error("Import file does not exist: " + self.__defPath)
                 return None
+            modulePath = os.path.split(os.path.abspath(self.__defPath))[0]
             moduleName = os.path.basename(os.path.splitext(os.path.abspath(self.__defPath))[0])
+            sys.path.append(modulePath)
             locals()[moduleName] = __import__(moduleName)
         if not os.path.exists(path):
             Error("Eval file does not exist: " + path)
