@@ -6,6 +6,7 @@ from SchemaConst import *
 from SchemaLogger import *
 from SchemaRule import *
 from SchemaSchema import *
+from SchemaImporter import *
 
 class SchemaChecker:
     def __init__(self, configPath, schemaPath, defPath = None):
@@ -21,16 +22,24 @@ class SchemaChecker:
         return False
 
     def __checkSchemaFile(self):
-        self.__schema = self.__evalFile(self.__schemaPath)        
-        if not self.__schema:
+        result, self.__schema = self.__evalFile(self.__schemaPath)        
+        if not result:
             Error("Check schema failed")
+            return False
+        result, self.__schema = self.__doImport(self.__schema)
+        if not result:
+            Error("Import schema failed")
             return False
         return CheckSchema(SchemaRoot, self.__schema, MetaSchema)
 
     def __checkConfigFile(self):
-        self.__config = self.__evalFile(self.__configPath)
-        if not self.__config:
+        result, self.__config = self.__evalFile(self.__configPath)
+        if not result:
             Error("Check config failed")
+            return False
+        result, self.__config = self.__doImport(self.__config)
+        if not result:
+            Error("Import config failed")
             return False
         return CheckSchema(SchemaConfigRoot, self.__config, self.__schema)
 
@@ -45,5 +54,28 @@ class SchemaChecker:
             locals()[moduleName] = __import__(moduleName)
         if not os.path.exists(path):
             Error("Eval file does not exist: " + path)
-            return None
-        return eval(open(path).read())
+            return False, None
+        return True, eval(open(path).read())
+
+    def __doImport(self, config):
+        result = True
+        configCopy = None
+        if isinstance(config, dict):
+            configCopy = {}
+            for k in config:
+                kResult, configCopy[k] = self.__doImport(config[k])
+                result &= kResult
+        elif isinstance(config, list):
+            configCopy = []
+            for v in config:
+                vResult, vConfig = self.__doImport(v)
+                result &= vResult
+                configCopy.append(vConfig)
+        elif isinstance(config, SchemaImporter):
+            importPath = config.GetImportPath()
+            result, importConfig = self.__evalFile(importPath)
+            if result:
+                result, configCopy = self.__doImport(importConfig)
+        else:
+            configCopy = config            
+        return result, configCopy
