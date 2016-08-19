@@ -8,7 +8,7 @@
         Const.Type: Const.UIApp,
         Const.Path: "C:/Windows/System32/calc.exe",
         Const.SubUI: [
-            SchemaImporter("ConfigDesktop.py")
+            ImportFile("ConfigDesktop.py")
         ]
     },
 
