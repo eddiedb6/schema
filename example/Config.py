@@ -1,6 +1,7 @@
 # Config Rule:
 #     1. The key name should be uniq
 #     2. Support dict, array, and basic type only
+#     3. If use "ImportFile", the file path is relative to root config file path
 
 {
     Const.UI: {
@@ -15,7 +16,7 @@
     Const.Action: {
         Const.SubAction: [
         {
-            Const.Script: "scripts/Test.py"
+            Const.Script: "Test.py"
         }]
     }
 }
