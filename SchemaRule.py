@@ -68,6 +68,9 @@ class KeyIn(BaseRule):
     def __init__(self, collection):
         self.__collection = collection
     def Check(self, key, value, schema):
+        if not isinstance(self.__collection, list):
+            Error("It's not list type on check KeyIn: " + self.__collection)
+            return False
         for k in value:
             if k not in self.__collection:
                 Error("Key is not in specified collection: " + k)
@@ -78,6 +81,9 @@ class ValueIn(BaseRule):
     def __init__(self, collection):
         self.__collection = collection
     def Check(self, key, value, schema):
+        if not isinstance(self.__collection, list):
+            Error("It's not list type on check ValueIn: " + self.__collection)
+            return False
         for v in self.__collection:
             if value == v:
                 return True
