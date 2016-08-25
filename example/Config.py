@@ -15,8 +15,7 @@
 
     Const.Action: {
         Const.SubAction: [
-        {
-            Const.Script: "Test.py"
-        }]
+            ImportFile("ConfigScript.py")
+        ]
     }
 }
