@@ -1,7 +1,8 @@
 from SchemaConst import *
 
-# 0. type
-# 1. empty functor
+# Foreach type:
+#     Index [0]: type
+#     Index [1]: empty functor
 
 MetaType = {
     SchemaTypeDict:
