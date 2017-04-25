@@ -1,6 +1,7 @@
 SchemaRoot = "schemaroot" # Root of schema of config schema
 SchemaConfigRoot = "schemaconfigroot" # Root of config schema
 SchemaAnyOther = "schemaanyother" # Wildcard for config key
+SchemaIgnoreSchema = "schemaignoreschema" # Ignore schema check for value under this key
 
 # Schema Keys
 

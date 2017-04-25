@@ -16,11 +16,14 @@ def _checkType(key, value, keySchema):
 
 def _check(key, value, schema):
     if key not in schema:
-        if SchemaAnyOther not in schema:
-            Error("Key does not defined in schema: " + key)
-            return False
+        if key == SchemaIgnoreSchema:
+            return True
         else:
-            key = SchemaAnyOther
+            if SchemaAnyOther in schema:
+                key = SchemaAnyOther
+            else:
+                Error("Key does not defined in schema: " + key)
+                return False
     keySchema = _cloneSchema(schema[key], schema)
     if keySchema is None:
         Error("Could not get schema for key: " + key)
