@@ -80,5 +80,11 @@
         SchemaRule: [
             CheckForeachAsType(Const.Action)
         ]
+    },
+    Const.Ignore: {
+        SchemaType: SchemaTypeDict,
+        SchemaRule: [
+            IgnoreChildSchema()
+        ]
     }
 }

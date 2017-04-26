@@ -17,6 +17,8 @@ Script = "script"
 
 BreakTime = "breaktime"
 
+Ignore = "ignore"
+
 #############
 #   Value   #
 #############

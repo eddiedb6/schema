@@ -17,5 +17,9 @@
         Const.SubAction: [
             ImportFile("ConfigScript.py")
         ]
+    },
+
+    Const.Ignore: {
+        "IgnoreKey": "Will not check this key"
     }
 }

@@ -16,14 +16,11 @@ def _checkType(key, value, keySchema):
 
 def _check(key, value, schema):
     if key not in schema:
-        if key == SchemaIgnoreSchema:
-            return True
+        if SchemaAnyOther in schema:
+            key = SchemaAnyOther
         else:
-            if SchemaAnyOther in schema:
-                key = SchemaAnyOther
-            else:
-                Error("Key does not defined in schema: " + key)
-                return False
+            Error("Key does not defined in schema: " + key)
+            return False
     keySchema = _cloneSchema(schema[key], schema)
     if keySchema is None:
         Error("Could not get schema for key: " + key)
@@ -33,11 +30,14 @@ def _check(key, value, schema):
 def _doCheck(key, value, keySchema, schema):
     if not _checkType(key, value, keySchema):
         return False
+    isCheckChild = True
     if SchemaRule in keySchema:
         for rule in keySchema[SchemaRule]:
             if not rule.Check(key, value, schema):
                 return False
-    if isinstance(value, dict):
+            if isinstance(rule, IgnoreChildSchema):
+                isCheckChild = False
+    if isCheckChild and isinstance(value, dict):
         for k in value:
             if not _check(k, value[k], schema):
                 return False
@@ -65,7 +65,7 @@ class BaseRule:
     def __init__(self):
         pass
     def Check(self, key, value, schema):
-        return True
+        return False
 
 class KeyIn(BaseRule):
     def __init__(self, collection):
@@ -154,4 +154,10 @@ class CheckForeachAsType(BaseRule):
         for v in value:
             if not _doCheck(key, v, keySchema, schema):
                 return False
+        return True
+
+class IgnoreChildSchema(BaseRule):
+    def __inti__(self):
+        pass
+    def Check(self, key, value, schema):
         return True
