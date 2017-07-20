@@ -1,0 +1,5 @@
+[
+    {
+        Const.Script: "Script.py"
+    }
+]

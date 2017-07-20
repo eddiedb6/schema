@@ -15,11 +15,10 @@
 
     Const.Action: {
         Const.SubAction: [
-            ImportFile("ConfigScript.py")
+            ImportFile("ConfigScript.py"),
+            ImportPartial("PartialScript.py")
         ]
     },
 
-    Const.Ignore: {
-        "IgnoreKey": "Will not check this key"
-    }
+    Const.PartialImport: ImportPartial("PartialUI.py")
 }

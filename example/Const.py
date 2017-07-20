@@ -19,6 +19,8 @@ BreakTime = "breaktime"
 
 Ignore = "ignore"
 
+PartialImport = "partialimport"
+
 #############
 #   Value   #
 #############
