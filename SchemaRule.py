@@ -152,7 +152,7 @@ class CheckForeachAsType(BaseRule):
         if keySchema is None:
             return False
         for v in value:
-            if not _doCheck(key, v, keySchema, schema):
+            if not _doCheck(self.__schemaKey, v, keySchema, schema):
                 return False
         return True
 
