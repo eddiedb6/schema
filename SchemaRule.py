@@ -118,7 +118,7 @@ class CheckAsTypeFromKey(BaseRule):
         self.__key = key
     def Check(self, key, value, schema):
         if self.__key not in value:
-            Error("Key of type is not defined: " + self.__key, + ", " + key)
+            Error("Key of type is not defined: " + self.__key + ", " + key)
             return False
         typeFromKey = value[self.__key]
         if typeFromKey not in schema:
