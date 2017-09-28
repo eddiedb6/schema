@@ -127,7 +127,7 @@ class CheckAsTypeFromKey(BaseRule):
         keySchema = _cloneSchema(schema[typeFromKey], schema)
         if keySchema is None:
             return False
-        return _doCheck(key, value, keySchema, schema)
+        return _doCheck(typeFromKey, value, keySchema, schema)
 
 class NotEmpty(BaseRule):
     def __init__(self, dataType):
