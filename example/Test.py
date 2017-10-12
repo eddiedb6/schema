@@ -7,7 +7,7 @@ from SchemaChecker import *
 checker = SchemaChecker("Config.py", "Schema.py", "Const.py")
 checkResult, checkSchema = checker.Check()
 if checkResult:
-    print "Check successfully"
+    print("Check successfully")
 else:
-    print "Check failed"
+    print("Check failed")
 
